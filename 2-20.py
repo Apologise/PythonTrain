@@ -9,3 +9,4 @@ floats = array('d')
 fp = open('floats.bin', 'rb')
 floats.fromfile(fp, 10**7)
 print(floats[-1])
+
