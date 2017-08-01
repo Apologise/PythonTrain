@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+
+    <meta name="keywords" content="python, 在线编程, 在线python, python学习,python问答, 挑战python, acm题目分类, oj题目分类"/ >
+    <meta name="description" content="本站是一个关于python的学习网站，包括python电子书、python在线编程、python问答、挑战python、 代码分享等内容" />
+  <meta name="baidu-tc-cerfication" content="c1caf3b6cc8f60b5402cad299f5a8541" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="360-site-verification" content="205e24faae0c8ef7d1cd6556c9d75744" />
+<meta name="google-site-verification" content="ldLZ1827DUwfzPk55aQDJ-T9diS_T5ItqsxfSAh_o0U" />
+<meta name="sogou_site_verification" content="Y9Jh7BpA2t"/>
+<!-- <meta name="baidu-site-verification" content="LabPIP7BRo" /> -->
+<meta name="baidu-site-verification" content="brFu34n6Dj" />
+<meta property="wb:webmaster" content="339e19c3110dd0d5" />
+<meta name="wumiiVerification" content="28a5b590-80af-4742-b2e9-02b2a7c09282" />
+<meta name="ujianVerification" content="db1823b30ca19b95355254d170fb2ea9" />
+<meta name="msvalidate.01" content="514FE97F029A2411912B231DA7EA4268" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="ujianVerification" content="9ba1b55a529c857071d4c080ed81de1d" />
+
+
+
+  
+    <title>
+    PythonTip - python学习、在线编程、acm题目分类
+    </title>
+    
+      <meta name="baidu_union_verify" content="031ea4084b90b9f32781a242f8f83d91">
+<meta name="domain_verify" content="pmrgi33nmfuw4ir2ejyhs5din5xhi2lqfzrw63jcfqrgo5ljmqrduitcgvstenzumi4dan3bgi2dsnbvhe3dsyrvgbtdmobvgy2wimrwmercyitunfwwku3bozsseorrgqydqnjrgqzdanbuguyh2">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="ujianVerification" content="9ba1b55a529c857071d4c080ed81de1d" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="http://2.pythontip.sinaapp.com/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="/static/django/css/form.err.css" rel="stylesheet" media="screen">
+<link href="/static/prettify/prettify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/static/prettify/prettify.js"></script>
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  .footer{
+  border:0px;
+  }
+  
+</style>
+<link href="http://2.pythontip.sinaapp.com/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!-- <link href="/static/css/style.css" rel="stylesheet" type="text/css"> -->
+<!--    <script src="http://code.jquery.com/jquery.js"></script>-->
+  <script src="http://2.pythontip.sinaapp.com/static/jquery/jquery-1.7.2.min.js"></script> 
+<!-- <script src="/static/jquery/jquery-1.4.4.min.js"></script> -->
+<script src="http://2.pythontip.sinaapp.com/static/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="shortcut icon" href="http://2.pythontip.sinaapp.com/static/img/common/shortcut_w.jpg" type="image/x-icon"/>
+
+
+    
+    
+    
+    
+    
+<script>
+function add_favourite(type, itemid)
+{
+    var url = '/user/addFavourite';
+    $('#favo-note-msg').html('网速好像有点不给力，投票中，请稍后...');
+    $('#favoModal').modal('show');
+    $.post(url,{'type':type,'itemid':itemid},function(data){
+    	if(data == '1' ){
+    		$('#favo-note-msg').html('收藏成功');
+    		$('#favoModal').modal('show');
+    	}
+    	else if(data == '2'){
+    		$('#favo-note-msg').html('收藏请先登录哦');
+    		$('#favoModal').modal('show');
+    	}
+    	else{
+    		$('#favo-note-msg').html("貌似你已经收藏过了哦");
+    		$('#favoModal').modal('show');
+    	}
+    },"text");//这里返回的类型有：json,html,xml,text
+}
+
+function vote_for_obj(vote_url,obj_id,dir)
+{
+    var url = vote_url + obj_id + '/' + dir;
+    $.post(url,{},function(data){
+        res = eval('('+data + ')');
+        if ( res.success ) {
+            up = (res.score.num_votes + res.score.score) / 2;
+            down = (res.score.num_votes - res.score.score) / 2;
+            $('#vote-up-'+obj_id).html('顶(' + up + ')');
+            $('#vote-down-'+obj_id).html('踩(' + down + ')');
+        } else {
+            $('#voting-modal').modal('show');
+            $('#voting-note-msg').html(res.error_message);
+        }
+    });
+}
+</script>
+<style>
+.favo-div{
+	height:30px;
+	width:30px;
+cursor:pointer;
+}
+ 
+/*广告Begin*/
+ #guanggao1{position:fixed!important;position:absolute;right:0;top:80px;top:expression(offsetParent.scrollTop+offsetParent.clientHeight-150);cursor:pointer;}
+ #guanggao2{position:fixed!important;position:absolute;right:0;top:280px;top:expression(offsetParent.scrollTop+offsetParent.clientHeight-150);cursor:pointer;}
+    
+/*广告END*/
+</style>
+  </head>
+  <body onload="prettyPrint()">
+<!--/*广告Begin*/-->   
+
+      
+<div id="guanggao1" style="width:120px;height:190px;z-index:99;text-align:left; margin-right: 10px;padding:0px;background:#70E1FF; color:#FF; padding:5px">
+    <p style="margin-right: 10;">
+    <span style="color:red"><strong></strong></span>
+        <p>sohocoder收集全网最新、最全项目<br />
+            <a href="http://www.sohocoder.com/#!/index?iscode=1" target="_blank"><img src="http://pythontip-img.stor.sinaapp.com/other/qrcode_for_gh_564779882dc7_258.jpg" /></a>
+            <!--
+            <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=821319898" target="_blank">
+                <img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PythonTip" title="PythonTip">
+            </a>
+            -->
+
+</p>
+
+</div>
+      
+<div id="guanggao2" style="width:115px;height:210px;z-index:99;text-align:left; margin-right: 10px;">
+<!--<div id="guanggao1" style="width:127px;height:210px;z-index:99;text-align:left; margin-right: 10px;padding:0px;background:#70E1FF; color:#FF;">-->
+    <a href="http://soft.litianqiang.com/?tip" target="_blank"><img src="http://pythontip-img.stor.sinaapp.com/other/%E5%B9%BF%E5%91%8A.jpg" /></a>
+ </div>
+<!--/*广告END*/-->
+      
+  <!-- Modal -->
+    <div id="favoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">执行状态</h3>
+      </div>
+      <div class="modal-body">
+        <pre id="favo-note-msg">投票中...</pre>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确认</button>
+      </div>
+    </div>
+    
+      <style>
+.user-info{
+font-size:8pt;
+color:#0;
+margin-top:5px;
+text-align:right;
+width:90%;
+display:inline-block;
+margin-right:200px;
+}
+
+.user-info>a
+{
+font-weight:bold;
+}
+.user-info>a:hover
+{
+font-weight:bold;
+color:#0;
+text-decoration:none;
+}
+/*.div-1
+{
+  width:100%;
+  
+}*/
+</style>
+<link rel="stylesheet" href="/static/jquery/jquery-ui.css" />
+<script src="/static/jquery/jquery-ui.js"></script>
+
+<script>
+    $.widget( "custom.catcomplete", $.ui.autocomplete, {
+    _renderMenu: function( ul, items ) {
+      var that = this,
+        currentCategory = "";
+      $.each( items, function( index, item ) {
+        if ( item.category != currentCategory ) {
+          ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+          currentCategory = item.category;
+        }
+        that._renderItemData( ul, item );
+      });
+    }
+    });
+    
+    $(function() { 
+    $( "#mysearch" ).catcomplete({
+      delay: 0,
+      source: function( request, response ) {
+        $.ajax({
+          url: "/search_sug",
+          dataType: "json",
+          data: {
+            format: "json",
+            word: request.term
+          },
+          success: function( data ) {
+            var arr=new Array();
+            $.map(data.sug,function(item){
+              arr=arr.concat([{label:item.query,category:"热搜词"}]);
+            });
+            response(arr);
+            // response( $.map( data.song, function( item ) {
+            //   return [{
+            //     label: item.songname,
+            //     category:'song',
+            //   }]
+
+            // }));
+          }
+        });
+      },
+    });
+    });
+</script> 
+<div class="navbar navbar-inverse navbar-fixed-top div-1">
+ <div class="navbar-inner div-1">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="/"><b>PythonTip</b></a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+       <!--   <li><a href="/home">首页</a></li>-->
+          <li><a href="/coding/run">在线编程</a></li>
+          <li><a href="/coding/code_oj">挑战python</a></li>
+          <li><a href="/blog/">博文</a></li>
+           <li><a href="/pythonPatterns/">模式</a></li>
+           <li><a href="/acm/post?page=1">算法</a></li>
+        <!--  <li><a href="/cqa/index">问答</a></li>  -->       
+          <li><a href="/acm/problemCategory" >ACM </a></li>
+          <li class="dropdown-submenu">
+            <a href="#">课堂</a>
+            <ul class="dropdown-menu" aria-labelledby="dLabel">
+              <li class="dropdown-submenu">
+                <a href="#">python教程</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/study/books/pythontutorial3-master">Python入门指南</a></li>
+               <!--   <li><a href="/study/books/pythonbooks">Python书籍大全</a></li> !-->
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a href="#">Django教程</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/study/books/djangobook-py3k-cn">Django-book(中文1.4)</a></li>
+                  <li><a href="/study/books/django-book">Django-book（英文最新）</a></li>
+                  <li><a href="/study/books/zh-django-best-practices-master">Django-最佳实践</a></li>                
+                  <li><a href="/study/books/django-endless-pagination-master">Django-分页终结者</a></li>
+                  <li><a href="/study/books/django-cms">Django-cms内容管理</a></li>
+                 <!-- <li><a href="/study/books/django-taggit">Django-完美标签</a></li>
+                  <li><a href="/study/books/django-categories">Django-完美目录</a></li> 
+                  <li><a href="/study/books/django-haystack">Django-Haystack打造自己的搜索</a></li>!-->
+                  <li><a href="/study/books/django-reusable-app-docs-master">Django-可复用app设计</a></li>
+                  <li><a href="/study/books/django-avatar">Django-avatar 用户头像</a></li>
+                  <li><a href="/study/books/nginx">nginx服务器</a></li>
+                 <!-- <li><a href="/study/books/jsbooks">Js 书籍</a></li>   !-->             
+                </ul>
+              </li>
+                 <li class="dropdown-submenu">
+                <a href="#">HTML教程</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/html_teach">HTML简明教程</a></li>
+
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu">
+            <a href="#">下载</a>
+            <ul class="dropdown-menu">
+                  <li><a href="/winpy_libs">Python库安装包大全</a></li>
+                  <li><a href="/study/share_yunpan">python电子书大全</a></li>
+            </ul>
+            </li>
+  <!--         <li><a href="/coding/code_snippet">梦断</a></li> -->
+     
+          <li><a href="/feed_back" >吐槽 </a></li>
+ <!--         <li><a href="http://m.pythontip.com/game/index.html" target="_blank">放松</a></li> -->
+          <li><a href="/about" >About</a></li>
+        </ul>
+        <form class="form-search navbar-form pull-right" target="_blank" action="/search">
+          <div class="input-append">
+              <input class="span2 search-query" id="mysearch" name="query" type="text" value="pythontip" />
+              <button type="submit" class="btn" >搜索</button>
+          </div>
+        </form>
+      </div><!--/.nav-collapse --> 
+    </div>
+  </div>
+  <span class="user-info">
+        
+        <a  href="/user/login" >登录</a>|
+        <a  href="/user/register">注册</a> 
+      
+  </span>
+</div>      
+    
+    
+
+    
+
+<style>
+/*body{
+background:#260930;
+	overflow: hidden;
+}*/
+.index-div{
+	background-image:url(/static/img/index/div-bg.png);
+	padding:5px;
+	margin-top:4px;
+	margin-bottom:4px;
+	margin-left:6px;
+	margin-right:6px;
+	border:#FFF solid 2px;
+	color:black;
+}
+.index-div:hover{
+	background-image:url(/static/img/index/div-bg.png);
+	padding:5px;
+	margin-top:4px;
+	margin-bottom:4px;
+	margin-left:6px;
+	margin-right:6px;
+	border-top:#999 solid 1px;
+	border-left:#999 solid 1px;
+	color:#CFF;
+}
+.home_img{
+height:180px;
+}
+.logo{
+height:200px;
+background-image:url(/static/img/index/logo_bg1.jpg);
+background-size:100% 100%;
+
+margin-bottom: 30px;
+font-size: 18px;
+font-weight: 200;
+line-height: 30px;
+color: inherit;
+background-color: #eee;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+}
+
+
+</style>
+
+
+<!--
+<div id="haoetv" style="width:328px;height:160px;z-index:99;text-align:left; margin-right: 40px;background:#70E1FF; color:#FF; padding:5px">
+<p style="margin-right: 10">
+<strong>PythonTip资金告急</strong>
+</p>
+<p style="margin-right: 10;">PythonTip是一个公益项目，网站托管于付费服务器。由于目前访问人数飙升，每日流量等资源消耗较多，现出售广告位（具体位置可协商）以支付每月机器费用，有意者请进群联系站长。~<br />
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=fb8d77f67568609b80b0fa721c8f7510eac540a2fd802c2f41fc3fa4e548fe92"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PythonTip" title="PythonTip"></a> 170341922(PythonTip)<br/>
+<a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=c7344fb80c9f3ecf85a6887c518518698f2b357f5080c8c5dd181e76140a08f4"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PythonTip" title="PythonTip"></a>
+ 315417911（一人一python)
+
+</p>
+</div>
+-->
+ <!--  /*广告END*/ -->
+
+<div class="container">
+  <!--  <div class="jumbotron">
+    <h2><p class="text-center text-success">Python之禅--<em>无雨纶比地镁</em></p></h2>
+    <p class="text-center lead">
+      <a href="/coding/run">
+        美胜于丑,显胜于隐,简胜于繁,繁胜于杂,平胜于迭,疏胜于密,读胜于写...名可名, 请常名
+      </a>
+    </p>
+  </div>
+  <hr />-->
+  <div class="logo">
+  <br />
+  <h1><p class="text-center " >Python之禅--<em>大道至简</em></p></h1>
+    <p class="text-center lead">
+      <a style="color:black;text-decoration:none" href="/coding/run">
+        美胜于丑,显胜于隐,简胜于繁,繁胜于杂,平胜于迭,疏胜于密,读胜于写...名可名, 请常名
+      </a>
+    </p>
+     <div class="text-right" style="padding-right:10px">
+<!--      <a href="http://yunmei.sinaapp.com/" target="blank">云美工作室</a> -->
+     <a target="_blank" href="/about"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="加入QQ群" title="加入QQ群"></a>
+
+      <br />
+     
+<!--         <form class="form-search" action="/search">
+            <div class="input-append">
+                
+                <button type="submit" class="btn">搜索</button>
+            </div>
+        </form> -->
+    </div>
+  </div>
+   
+  
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  
+</style>
+
+
+<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+    <li data-target="#myCarousel" data-slide-to="4"></li>
+  </ol>
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <div class="active item">
+        <h4>最新挑战</h4>
+        <!--<a href="http://zu.cd.fang.com/house/a21/?utm_source=cdhezuo&utm_medium=click&utm_term=&utm_content=&utm_campaign=zu-pythontip_cd" target='blank'>劲爆消息!"0中介费租房",不花钱也可以让别人帮你找房子!</a>-->
+       <table class="table table-hover"> 
+       <tr>
+           
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/29"><b>Tingway</b>挑战了 判断三角形</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/12"><b>fukaifeng</b>挑战了 结尾非零数的奇偶性</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/12"><b>fukaifeng</b>挑战了 结尾非零数的奇偶性</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/12"><b>fukaifeng</b>挑战了 结尾非零数的奇偶性</a></td>
+            
+              </tr><tr> 
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/29"><b>Tingway</b>挑战了 判断三角形</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/4"><b>pai1573</b>挑战了 输出字典key</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/4"><b>pai1573</b>挑战了 输出字典key</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/4"><b>pai1573</b>挑战了 输出字典key</a></td>
+            
+             
+              </tr><tr> 
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/4"><b>pai1573</b>挑战了 输出字典key</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/16"><b>HXZ88</b>挑战了 人民币金额打印</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/12"><b>fukaifeng</b>挑战了 结尾非零数的奇偶性</a></td>
+            
+             
+             
+             </td><td><a style="color:black; size:12px" href="/coding/code_oj_case/30"><b>wahahaha</b>挑战了 National Day</a></td>
+            
+        </tr>
+         </table>         
+    </div>
+    <div class="item">
+    <h4>最新题目</h4>
+       <table class="table table-hover"> 
+       <tr>
+           
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/175"><b>ShowTheCode</b>新增题目 汉诺塔</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/174"><b>liushulinle</b>新增题目 矩形个数</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/173"><b>liushulinle</b>新增题目 本原串</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/172"><b>liushulinle</b>新增题目 绝对值排序</a></td>
+            
+              </tr><tr> 
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/171"><b>liushulinle</b>新增题目 计算两点间的距离</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/170"><b>liushulinle</b>新增题目 特殊的倍数</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/169"><b>liushulinle</b>新增题目 再谈数数II</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/168"><b>liushulinle</b>新增题目 再谈数数</a></td>
+            
+             
+              </tr><tr> 
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/167"><b>liushulinle</b>新增题目 一个萝卜一个坑</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/166"><b>liushulinle</b>新增题目 Excel列数</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/165"><b>liushulinle</b>新增题目 表达式运算</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/coding/code_oj_case/164"><b>liushulinle</b>新增题目 最长回文子串</a></td>
+            
+        </tr>
+         </table>
+         </div>
+    <div class="item">
+    <h4>最新博文</h4>
+       <table class="table table-hover"> 
+       <tr>
+           
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13125"><b>liushulinle</b>发表 Python Copy模块</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13124"><b>liushulinle</b>发表 vim编辑器的常用配置项</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13123"><b>liushulinle</b>发表 linux中Ctrl Z和C...</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13122"><b>liushulinle</b>发表 Python的With语句</a></td>
+            
+              </tr><tr> 
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13121"><b>liushulinle</b>发表 推荐一个非常有趣的pytho...</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13120"><b>liushulinle</b>发表 vim的pymode插件</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13119"><b>liushulinle</b>发表 用PyCharm专业版实现远...</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13118"><b>liushulinle</b>发表 Python 2和Pytho...</a></td>
+            
+             
+              </tr><tr> 
+             <td><a style="color:black; size:12px" href="/blog/post/13115"><b>liushulinle</b>发表 Python源码剖析----...</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13114"><b>liushulinle</b>发表 python源码剖析笔记--...</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13113"><b>liushulinle</b>发表 python源码剖析笔记--...</a></td>
+            
+             
+             
+             <td><a style="color:black; size:12px" href="/blog/post/13112"><b>liushulinle</b>发表 python源码剖析笔记--...</a></td>
+            
+        </tr>
+         </table>
+    </div>
+    <div class="item">
+     <h4>最新提问</h4>
+       <table class="table table-hover">
+       <tr>
+           
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1491"><b>cherryyarong</b>提出问题 输出字符奇数位置的字符串...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1490"><b>plainter</b>提出问题 EmptyDataErr...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1489"><b>Ploso</b>提出问题 (1)list[:-1:...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1488"><b>Ploso</b>提出问题 &gt;&gt;&gt; list[:-1...</a></td>
+            
+              </tr><tr> 
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1487"><b>yzx</b>提出问题 快速排序的递归算法</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1486"><b>yqli4</b>提出问题 txt文件已字典形式输出...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1485"><b>bentenky</b>提出问题 如何用Python建个界...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1484"><b>匿名</b>提出问题 初学，那位给看看，怎么回...</a></td>
+            
+             
+              </tr><tr> 
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1483"><b>zhixau</b>提出问题 具体方法中能调用装饰器中...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1482"><b>xinxin</b>提出问题 使用smtp发送邮件遇到...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1481"><b>riri</b>提出问题 按照教材敲的，不知道哪里...</a></td>
+            
+             
+             
+
+             <td><a style="color:black; size:12px" href="/cqa/showQuestion/1480"><b>riri</b>提出问题 按照教材敲的，不知道哪里...</a></td>
+            
+        </tr>
+         </table>
+    </div>
+    <div class="item">
+      <h4>全城热搜</h4>
+      <table class="table table-hover">
+          <tr>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com core&amp;safe=strict"><b>匿名</b> google搜索:core</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com automation&amp;safe=strict"><b>匿名</b> google搜索:automation</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com automation&amp;safe=strict"><b>匿名</b> google搜索:automation</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com numpy&amp;safe=strict"><b>匿名</b> google搜索:numpy</a></td>
+              
+                   </tr><tr> 
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com pycparser&amp;safe=strict"><b>匿名</b> google搜索:pycparser</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com ???????-???2 &amp;safe=strict"><b>匿名</b> google搜索:???????...</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com 回文子串 &amp;safe=strict"><b>longlongago</b> google搜索:回文子串 </a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com PIL&amp;safe=strict"><b>匿名</b> google搜索:PIL</a></td>
+              
+                  
+                    </tr><tr> 
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com Bitarray&amp;safe=strict"><b>匿名</b> google搜索:Bitarray</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com pyv8&amp;safe=strict"><b>匿名</b> google搜索:pyv8</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com smtplib&amp;safe=strict"><b>匿名</b> google搜索:smtplib</a></td>
+              
+                  
+                   
+
+                  <td><a style="color:black; size:12px" href="https://www.google.com.hk/#newwindow=1&amp;q=site:pythontip.com gmpy&amp;safe=strict"><b>匿名</b> google搜索:gmpy</a></td>
+              
+              </tr>
+      </table>
+    </div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+  <h1>在PythonTip，我能做什么？</h1>
+  <hr />
+  <table>
+  <tr>
+  <td>
+  <div class="row-fluid"> 
+	  <div class="span4"> 
+		  <a href="/study/books/pythontutorial3-master" class="thumbnail"> 
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/books.jpg"> 
+		  </a> 
+		  <h2 class="center">Python入门</h2> 
+		  <p>Python是一门简单易学且功能强大的编程语言。  优雅的语法和动态类型，编写python犹如书写闲文，悠闲而惬意。</p> 
+  	 </div>
+ 
+     <div class="span4"> 
+		  <a href="/coding/run" class="thumbnail"> 
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/online_coding.jpg"> 
+		  </a> 
+		  <h2 class="center">体验Python</h2> 
+		  <p>尝试编写几行python代码，进来尽情体验python编程的快乐吧，体验她的简洁之美，优雅之美!</p> 
+  	 </div>
+    
+    <div class="span4"> 
+		  <a href="/coding/code_oj" class="thumbnail"> 
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/challenge.jpg"> 
+		  </a> 
+		  <h2 class="center">挑战Python</h2> 
+		  <p>如果你是一位勇敢的Pythoner，那就不要犹豫，进来挑战Python吧，不断失败，不断学习，不断进步，挑战就是新生。</p> 
+  	 </div>
+   
+  </div>
+  <div class="row-fluid">
+  
+  <div class="span4"> 
+		  <a href="/blog/" class="thumbnail"> 
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/blog.jpg"> 
+		  </a> 
+		  <h2 class="center">技术博文</h2> 
+		  <p>深刻的技术用通俗易懂的语言表达，简明易懂的表述，技术不再神秘，悦读技术博文，复杂而深刻的技术真谛跃然纸上。</p> 
+  	 </div>
+    
+    <div class="span4"> 
+		  <a href="/cqa/index" class="thumbnail"> 
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/qa.jpg"> 
+		  </a> 
+		  <h2 class="center">笑问Python</h2> 
+		  <p>如果你是Python新人，你有很多疑问，那么不要迟疑，进来发问吧，高手在等你;如果你是Python大牛，那么请进来贡献你的智慧为他人答疑解惑。</p> 
+  	 </div>
+
+  <div class="span4">
+		  <a href="/study/books/djangobook-py3k-cn" class="thumbnail">
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/django.jpg">
+		  </a>
+		  <h2 class="center">Django入门</h2>
+		  <p>Django是一个开放源代码的Web应用框架，由Python写成。采用了MVC的软件设计模式，即模型M，视图V和控制器C。</p>
+  	 </div>
+
+     
+  </div>
+  <div class="row-fluid">
+  <div class="span4"> 
+		  <a href="/study/share_yunpan" class="thumbnail"> 
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/share.jpg"> 
+		  </a> 
+		  <h2 class="center">Python资源分享</h2> 
+		  <p>在这里，你可以找到百种热门python学习资源，各种手册、入门教程等待你的开启；各种深入探究等着你来探索，Get It and Read It。</p> 
+  	 </div>
+ 
+     <div class="span4"> 
+		  <a href="/acm/problemCategory" class="thumbnail"> 
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/acm_icpc.jpg"> 
+		  </a> 
+		  <h2 class="center">Python ACMer</h2> 
+		  <p>如果你是一位ACMer,请走进这里,在这有各大OJ的题目分类及比赛列表，用你的深厚的coding功力，到各大OJ赛场大展身手吧。</p> 
+  	 </div>
+
+      <div class="span4">
+		  <a href="/feed_back/" class="thumbnail">
+		  <img data-src="holder.js/350x200" alt="260x180" style="width: 350px; height: 200px;" src="http://2.pythontip.sinaapp.com/static/img/index/tucao.gif">
+		  </a>
+		  <h2 class="center">我要吐槽</h2>
+		  <p>如果在使用本站的过程中感觉有所不便，或者您希望我们添加某些功能，欢迎在此吐槽，我们会根据您的反馈逐步完善。</p>
+  	 </div>
+    
+  </div>
+  </td>
+  <!--  <td>
+     <strong> 网站动态 </strong>
+  <hr />
+  
+
+<script type="text/javascript">    
+//滚动信息
+window.onload=function(){marquee('roll_box','roll_content','roll_temp','40'); }
+function marquee(id,id1,id2,speed){    
+    var obj=document.getElementById(id);
+    var obj1=document.getElementById(id1);
+    var obj2=document.getElementById(id2);
+    obj2.innerHTML=obj1.innerHTML;
+    function scrolly(){if(obj.scrollTop>=obj1.offsetHeight){obj.scrollTop=0;}else{obj.scrollTop++;}}
+//function scrolly(){if(obj.scrollTop>=obj1.offsetHeight){obj1.offsetHeight-=obj.scrollTop;}else{obj.scrollTop++;}}
+
+    var rollTime=setInterval(scrolly,speed);
+    obj.onmouseover=function(){clearInterval(rollTime);}
+    obj.onmouseout=function(){rollTime=setInterval(scrolly,speed);}
+} 
+</script>
+
+
+<div id="roll_box" style="height:630px; width:300px; overflow:hidden;"><div id="roll_content">
+
+    
+</div><div id="roll_temp"></div>
+</div>
+  </td>-->
+  </tr>
+  </table>
+  <hr>
+</div>
+
+
+    
+    <hr />
+    <div class="container">
+      <!-- Modal -->
+<div id="voting-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="voting-myModalLabel">执行状态</h3>
+  </div>
+  <div class="modal-body">
+    <pre id="voting-note-msg">投票中...</pre>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确认</button>
+  </div>
+</div>
+<script type="text/javascript">
+var sogou_ad_id=360032;
+var sogou_ad_height=90;
+var sogou_ad_width=728;
+</script>
+
+      <div class="footer">
+        <p class="text-center" style="border:0px;">
+          @ Company 2013 Author: Zihuacs, Forrest, Ychn 
+        </p>
+        <p class="text-center" style="border:0px; display:none">
+          <!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=5&amp;mini=1&amp;pos=left&amp;uid=6760659" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<!--<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>-->
+<!-- Baidu Button END -->
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c0545c7b73f0306d8e8595476a372df1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+        </p>
+      </div>
+    </div>
+    
+
+<style>
+.backToTop {
+    display: none;
+    width: 20px;
+    line-height: 1.2;
+    padding: 5px 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    position: fixed;
+    _position: absolute;
+    right: 15px;
+    bottom: 150px;
+    _bottom: "auto";
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+}
+.weixinTop {
+/*    display: none;*/
+    width: 20px;
+    line-height: 1.2;
+    padding: 5px 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    position: fixed;
+    _position: absolute;
+    right: 15px;
+    bottom: 300px;
+    _bottom: "auto";
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+}
+</style>
+<script>
+(function() {
+    var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+        .text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 120);
+    }), $backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 150)? $backToTopEle.show(): $backToTopEle.hide();
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            $backToTopEle.css("top", st + winh - 166);
+        }
+    };
+    $(window).bind("scroll", $backToTopFun);
+    $(function() { $backToTopFun(); });
+})();
+
+</script>
+
+  </body>
+</html>
